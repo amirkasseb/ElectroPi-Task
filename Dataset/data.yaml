@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['clamp']
+
+roboflow:
+  workspace: faculty-of-engineering-alex-uni
+  project: clamp-detection-a7iao
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/faculty-of-engineering-alex-uni/clamp-detection-a7iao/dataset/2

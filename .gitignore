@@ -1,68 +1,15 @@
-# =========================
-# Python
-# =========================
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-.Python
-
-# Virtual environment
-venv/
-env/
-.venv/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# =========================
-# Logs / runs / training outputs
-# =========================
-runs/
-training results/
-*.pt
-*.pth
-*.onnx
-
-# TensorBoard
-events.out.tfevents*
-
-# =========================
-# Dataset (optional: ignore if large/local only)
-# =========================
-Dataset/
-frames/
-
-# =========================
-# Video / outputs
-# =========================
-Output/
-*.mp4
-*.avi
-*.mov
-
-# =========================
 # OS files
-# =========================
 .DS_Store
 Thumbs.db
 
-# =========================
-# IDEs
-# =========================
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment (optional but recommended)
+venv/
+.venv/
+
+# IDE settings
 .vscode/
 .idea/
-
-# =========================
-# Cache / temp
-# =========================
-*.log
-*.tmp
-
-# =========================
-# Secrets (important)
-# =========================
-.env
-*.key
-*.pem
