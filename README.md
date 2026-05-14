@@ -93,35 +93,6 @@ Current layout (matches the repository root):
 
 ---
 
-## The Problem: Flickering Counts
-
-When counting clamps directly from raw YOLO detections on a per-frame basis, the result is **unstable**:
-
-- Overlapping or adjacent clamps are sometimes detected as one box, sometimes as two
-- The bounding box count fluctuates frame-to-frame even when the scene hasn't changed
-- A simple `"count boxes on this frame"` approach is unreliable for video
-
----
-
-## The Solution: Temporal Stabilization
-
-Rather than trusting any single frame, detections are smoothed over a **rolling history window** using **majority voting**.
-
-```python
-from collections import Counter, deque
-
-history = deque(maxlen=20)          # rolling window of last 20 frames
-
-# inside the frame loop:
-raw_count = len(results[0].boxes)
-history.append(raw_count)
-stable_count = Counter(history).most_common(1)[0][0]  # mode of window
-```
-
-This suppresses brief splits and merges while still allowing the count to adapt when the scene genuinely changes. Combined with tuned `conf` and `iou` thresholds on `model.predict(...)`, spurious and duplicate boxes are reduced before counting even begins.
-
----
-
 ## Training
 
 The model was trained using **Ultralytics YOLO11m** on a custom annotated clamp dataset.
@@ -152,26 +123,8 @@ Validation metrics at epoch 200 (from the last row of `results.csv`):
 
 > **Note:** Strong validation metrics on a small split should always be interpreted alongside qualitative checks on held-out video and real deployment conditions.
 
-### Inference output (video)
-
-Annotated inference (boxes + stabilized count) is saved as **`Output/output.mp4`** after you run `inference/inference.py`.
-
-**Open the file:** [`Output/output.mp4`](Output/output.mp4) — use Explorer / Finder and your default video player, or open the link from the GitHub file view.
-
-**Why there is often no inline player in preview**
-
-| Where you look | What happens |
-|----------------|----------------|
-| **Cursor / VS Code Markdown preview** | Preview does not load arbitrary `MP4` paths from your project (path resolution and media restrictions), so a `<video src="Output/output.mp4">` tag usually **does not play**. |
-| **GitHub `README` on the website** | A `<video>` tag with a **relative** path like `Output/output.mp4` is **not** rewritten to a streamable URL, so the player is often **blank or broken** unless you use an **absolute** video URL (see below). |
-
-**Inline playback on GitHub (recommended):** push `Output/output.mp4`, then in the browser open that file in your repo → **Raw** → copy the address bar URL (it looks like `https://raw.githubusercontent.com/<user>/<repo>/<branch>/Output/output.mp4`). Put that URL **alone on its own line** in this section (plain text, no angle brackets). GitHub will show a built-in player for many direct MP4 links.
-
-Example (replace with your real Raw URL after you publish):
-
-```text
-https://raw.githubusercontent.com/YourGitHubUser/YourRepoName/main/Output/output.mp4
-```
+## 🎥 Demo Video
+[Watch Output Video](Output/output.mp4)
 
 ### Training Curves
 
@@ -242,6 +195,35 @@ pip install ultralytics opencv-python tqdm
    ```
 
 4. **Find the output** — the annotated video is written to `Output/output.mp4`.
+
+---
+
+## Problem I Faced : Flickering Counts
+
+When counting clamps directly from raw YOLO detections on a per-frame basis, the result is **unstable**:
+
+- Overlapping or adjacent clamps are sometimes detected as one box, sometimes as two
+- The bounding box count fluctuates frame-to-frame even when the scene hasn't changed
+- A simple `"count boxes on this frame"` approach is unreliable for video
+
+---
+
+## The Solution: Temporal Stabilization
+
+Rather than trusting any single frame, detections are smoothed over a **rolling history window** using **majority voting**.
+
+```python
+from collections import Counter, deque
+
+history = deque(maxlen=20)          # rolling window of last 20 frames
+
+# inside the frame loop:
+raw_count = len(results[0].boxes)
+history.append(raw_count)
+stable_count = Counter(history).most_common(1)[0][0]  # mode of window
+```
+
+This suppresses brief splits and merges while still allowing the count to adapt when the scene genuinely changes. Combined with tuned `conf` and `iou` thresholds on `model.predict(...)`, spurious and duplicate boxes are reduced before counting even begins.
 
 ---
 
