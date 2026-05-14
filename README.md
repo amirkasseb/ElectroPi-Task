@@ -124,7 +124,8 @@ Validation metrics at epoch 200 (from the last row of `results.csv`):
 > **Note:** Strong validation metrics on a small split should always be interpreted alongside qualitative checks on held-out video and real deployment conditions.
 
 ## 🎥 Demo Video
-[Watch Output Video](Output/output.gif)
+
+![Demo](https://media.giphy.com/media/PtiIr93Oz7jw0lR6R7/giphy.gif)
 
 ### Training Curves
 
