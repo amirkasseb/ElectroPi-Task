@@ -125,9 +125,7 @@ Validation metrics at epoch 200 (from the last row of `results.csv`):
 
 ## 🎥 Demo Video
 
-<p align="center">
-  <img src="https://media.giphy.com/media/PtiIr93Oz7jw0lR6R7/giphy.gif" width="700"/>
-</p>
+![demo](https://media.giphy.com/media/PtiIr93Oz7jw0lR6R7/giphy.gif)
 
 ### Training Curves
 
