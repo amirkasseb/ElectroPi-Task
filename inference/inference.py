@@ -8,12 +8,12 @@ from collections import deque, Counter
 # ======================
 # CONFIG
 # ======================
-model = YOLO("model/best.pt")
+model = YOLO("/content/ElectroPi-Task/model/best.pt")
 
 CONF_THRESH = 0.2
 IOU_THRESH = 0.15
 
-video_path = "/content/drive/MyDrive/Task.mp4"
+video_path = "/content/ElectroPi-Task/video/Task.mp4"
 output_path = "Output/output.mp4"
 
 os.makedirs("Output", exist_ok=True)
@@ -96,22 +96,22 @@ while True:
     # ======================
     # UI DRAW
     # ======================
-    cv2.rectangle(annotated, (10, 10), (260, 90), (0, 0, 0), -1)
+    cv2.rectangle(annotated, (10, 10), (520, 130), (0, 0, 0), -1)
 
     cv2.putText(
         annotated,
         f"Count: {stable_count}",
-        (20, 45),
+        (20, 80),
         cv2.FONT_HERSHEY_SIMPLEX,
-        0.9,
+        2.5,
         (0, 255, 0),
-        2
+        5
     )
 
     cv2.putText(
         annotated,
         f"FPS: {fps_now:.2f}",
-        (20, 75),
+        (20, 120),
         cv2.FONT_HERSHEY_SIMPLEX,
         0.7,
         (255, 255, 0),
